@@ -6,7 +6,9 @@ export default function Home() {
 			<Head>
 				<title>BillBurst</title>
 			</Head>
-			<p>Hello World</p>
+			<div className='w-full max-w-2xl mx-auto'>
+				<p className='bg-gray-300'>Hello World</p>
+			</div>
 		</>
 	)
 }
