@@ -7,6 +7,7 @@ export default function Form({ onSubmit }) {
 	function handleSubmit(event) {
 		event.preventDefault()
 		onSubmit(state)
+		setstate(initialState)
 	}
 
 	return (
@@ -22,6 +23,7 @@ export default function Form({ onSubmit }) {
 						type='text'
 						placeholder='Jane'
 						value={state.name}
+						required={true}
 					/>
 				</div>
 				<div className='w-1/2 ml-2'>
@@ -29,6 +31,7 @@ export default function Form({ onSubmit }) {
 						$$$
 					</label>
 					<input
+						required={true}
 						onChange={(event) => setstate({ ...state, paid: event.target.value })}
 						className='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2'
 						type='text'
