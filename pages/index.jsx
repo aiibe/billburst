@@ -43,7 +43,10 @@ export default function Home() {
 		const rgx = new RegExp('^-?\\d*(\\.\\d+)?$') // Only integers and floats (comma is falsy)
 		const id = Math.random().toString(36).substring(7) // Generate random short string
 		if (!rgx.test(paid)) paid = 0
-		setrecord([...record, { name: name.toLowerCase(), paid, id }])
+		setrecord([
+			...record,
+			{ name: name.toLowerCase(), paid: parseFloat(paid), id },
+		])
 	}
 
 	useEffect(() => {
