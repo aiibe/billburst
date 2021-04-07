@@ -6,6 +6,12 @@ import { useState, useEffect } from 'react'
 export default function Home() {
 	const [currency, setCurrency] = useState('$')
 	const [record, setrecord] = useState([])
+	const [derivedRecord, setDerivedRecord] = useState([...record])
+
+	useEffect(() => {
+		setDerivedRecord(getDerivedRecords())
+		// getMembers()
+	}, [record])
 
 	const getDerivedRecords = () => {
 		return record.reduce((acc, { name, paid }, idx) => {
@@ -49,17 +55,13 @@ export default function Home() {
 		])
 	}
 
-	useEffect(() => {
-		getMembers()
-	}, [record])
-
 	return (
 		<div className='w-full max-w-2xl mx-auto px-4'>
 			<Header />
 
 			<Top record={record} currency={currency} />
 
-			{getDerivedRecords().map(({ name, records }) => (
+			{derivedRecord.map(({ name, records }) => (
 				<div
 					className='bg-white shadow overflow-hidden mb-4 sm:rounded-lg'
 					key={name}
