@@ -1,4 +1,5 @@
-import Header from '@/components/Header'
+import Header from '../components/Header'
+import Top from '../components/Top'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
@@ -68,22 +69,7 @@ export default function Home() {
 		<div className='w-full max-w-2xl mx-auto px-4'>
 			<Header />
 
-			<div className='flex justify-between items-center mb-4'>
-				<div>
-					<h3 className='text-2xl font-medium text-gray-900 font-bold'>
-						Total spent
-					</h3>
-					<p className='mt-1 max-w-2xl text-sm text-gray-500'>
-						Let's burst the bill !
-					</p>
-				</div>
-				<div>
-					<h1 className='text-4xl font-bold'>
-						<span className='text-lg mr-1 align-top'>{currency}</span>
-						{record.reduce((t, r) => (t += r.paid), 0)}
-					</h1>
-				</div>
-			</div>
+			<Top record={record} currency={currency} />
 
 			{getDerivedRecords().map(({ name, records }) => (
 				<div
