@@ -45,7 +45,7 @@ export default function Home() {
 		if (!rgx.test(paid)) paid = 0
 		setrecord([
 			...record,
-			{ name: name.toLowerCase(), paid: parseFloat(paid), id },
+			{ name: name.toLowerCase().trim(), paid: parseFloat(paid), id },
 		])
 	}
 
