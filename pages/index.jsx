@@ -1,17 +1,11 @@
 import Header from '../components/Header'
 import Top from '../components/Top'
+import Form from '../components/Form'
 import { useState, useEffect } from 'react'
 
 export default function Home() {
-	const initialForm = Object.freeze({ name: '', paid: 0 })
 	const [currency, setCurrency] = useState('$')
-	const [name, setName] = useState('')
-	const [hasPaid, setHasPaid] = useState('')
-	const [record, setrecord] = useState([
-		// { name: 'souk', paid: 45, id: 'sxiuG' },
-		// { name: 'vira', paid: 88, id: 'kimsH' },
-		// { name: 'souk', paid: 32, id: 'poyTy' },
-	])
+	const [record, setrecord] = useState([])
 
 	const getDerivedRecords = () => {
 		return record.reduce((acc, { name, paid }, idx) => {
@@ -42,23 +36,14 @@ export default function Home() {
 
 	const getMembers = () => {
 		const members = [...new Set(record.map((r) => r.name))] // ["alice", "paul"]
-		// console.log('members', members)
 		return members
 	}
 
-	const addExpense = () => {
-		const newRecord = { name: 'alice', paid: 5, id: 'uskwY' }
-		setrecord([...record, newRecord])
-	}
-
-	const handleSubmit = (event) => {
-		event.preventDefault()
+	const handleSubmit = ({ name, paid }) => {
+		const rgx = new RegExp('^-?\\d*(\\.\\d+)?$') // Only integers and floats (comma is falsy)
 		const id = Math.random().toString(36).substring(7) // Generate random short string
-		let paid = parseFloat(hasPaid)
-		if (isNaN(paid)) paid = 0
+		if (!rgx.test(paid)) paid = 0
 		setrecord([...record, { name: name.toLowerCase(), paid, id }])
-		setName('')
-		setHasPaid('')
 	}
 
 	useEffect(() => {
@@ -100,49 +85,14 @@ export default function Home() {
 							</div>
 							<h2 className='text-2xl font-bold'>
 								<span className='text-sm mr-1 align-top'>$</span>
-								{records.reduce((t, paid) => (t += paid), 0)}
+								{!records.length ? 0 : records.reduce((t, paid) => (t += paid), 0)}
 							</h2>
 						</div>
 					</div>
 				</div>
 			))}
 
-			<div className='pb-4'></div>
-
-			<form onSubmit={handleSubmit}>
-				<div className='flex mb-2'>
-					<div className='w-1/2 mr-2'>
-						<label className='block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2'>
-							Name
-						</label>
-						<input
-							onChange={(event) => setName(event.target.value)}
-							className='appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-2 px-2 mb-3'
-							type='text'
-							placeholder='Jane'
-							value={name}
-						/>
-					</div>
-					<div className='w-1/2 ml-2'>
-						<label className='block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2'>
-							$$$
-						</label>
-						<input
-							onChange={(event) => setHasPaid(event.target.value)}
-							className='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2'
-							type='text'
-							placeholder='33.1'
-							value={hasPaid}
-						/>
-					</div>
-				</div>
-				<button
-					type='submit'
-					className='mb-4 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700'
-				>
-					Add Expense
-				</button>
-			</form>
+			<Form onSubmit={handleSubmit} />
 		</div>
 	)
 }

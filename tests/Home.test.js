@@ -3,38 +3,48 @@ import userEvent from '@testing-library/user-event'
 
 import Home from '../pages/index'
 
+function userSubmitValidForm() {
+	const inputUsername = screen.getByPlaceholderText('Jane')
+	const inputPaid = screen.getByPlaceholderText('33.1')
+	const button = screen.getByRole('button')
+	userEvent.type(inputUsername, 'Lee')
+	userEvent.type(inputPaid, '3')
+	userEvent.click(button)
+}
+
+function userSubmitInvalidForm() {
+	const inputUsername = screen.getByPlaceholderText('Jane')
+	const inputPaid = screen.getByPlaceholderText('33.1')
+	const button = screen.getByRole('button')
+	userEvent.type(inputUsername, 'Lee')
+	userEvent.type(inputPaid, '3*')
+	userEvent.click(button)
+}
+
 describe('Home', () => {
 	beforeEach(() => {
 		render(<Home />)
 	})
 
-	afterEach(() => cleanup())
+	afterAll(() => cleanup())
 
 	it('render button Add Expense', () => {
 		expect(screen.getByRole('button')).toBeInTheDocument()
 	})
 
-	// it('render username input', () => {
-	// 	expect(screen.getByPlaceholderText('Jane')).toBeInTheDocument()
-	// })
+	it('onchange username input works', () => {
+		const inputUsername = screen.getByPlaceholderText('Jane')
+		userEvent.type(inputUsername, 'Henry')
+		expect(inputUsername).toHaveValue('Henry')
+	})
 
-	// it('render paid input', () => {
-	// 	expect(screen.getByPlaceholderText('33.1')).toBeInTheDocument()
-	// })
+	it('onchange paid input works', () => {
+		const inputPaid = screen.getByPlaceholderText('33.1')
+		userEvent.type(inputPaid, '45.0')
+		expect(inputPaid).toHaveValue('45.0')
+	})
 
-	// it('username input has value of Henry', () => {
-	// 	const inputUsername = screen.getByPlaceholderText('Jane')
-	// 	userEvent.type(inputUsername, 'Henry')
-	// 	expect(inputUsername).toHaveValue('Henry')
-	// })
-
-	// it('paid input has value of 45.0', () => {
-	// 	const inputPaid = screen.getByPlaceholderText('33.1')
-	// 	userEvent.type(inputPaid, '45.0')
-	// 	expect(inputPaid).toHaveValue('45.0')
-	// })
-
-	it('display total spent 3', () => {
+	it('sum total spent', () => {
 		const total = screen.getByRole('heading', { level: 1 })
 		const inputUsername = screen.getByPlaceholderText('Jane')
 		const inputPaid = screen.getByPlaceholderText('33.1')
@@ -45,14 +55,15 @@ describe('Home', () => {
 		expect(total).toHaveTextContent('3')
 	})
 
-	it('render new record component after submit complete form', () => {
-		const inputUsername = screen.getByPlaceholderText('Jane')
-		const inputPaid = screen.getByPlaceholderText('33.1')
-		const button = screen.getByRole('button')
-		userEvent.type(inputUsername, 'Lee')
-		userEvent.type(inputPaid, '3')
-		userEvent.click(button)
+	it('render new record component after submit valid form', () => {
+		userSubmitValidForm()
 		const username = screen.getAllByRole('heading', { level: 3 })[1]
 		expect(username).toHaveTextContent('lee')
+	})
+
+	it('render new record component with 0 after invalid form submission', () => {
+		userSubmitInvalidForm()
+		const paid = screen.getByRole('heading', { level: 2 })
+		expect(paid).toHaveTextContent('0')
 	})
 })
