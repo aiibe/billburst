@@ -1,65 +1,98 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Header from '../components/Header'
+import Top from '../components/Top'
+import Form from '../components/Form'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	const [currency, setCurrency] = useState('$')
+	const [record, setrecord] = useState([])
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+	const getDerivedRecords = () => {
+		return record.reduce((acc, { name, paid }, idx) => {
+			if (acc.length === 0) {
+				acc.push({ name, records: [paid] })
+			} else {
+				const members = [...new Set(acc.map((a) => a.name))]
+				if (!members.includes(name)) {
+					acc.push({ name, records: [paid] })
+				} else {
+					const slot = acc.findIndex((s) => s.name === name)
+					const newItem = { ...acc[slot], records: [...acc[slot].records, paid] }
+					acc[slot] = newItem
+				}
+			}
+			return acc
+		}, [])
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+		// Output similar:
+		// [
+		// 	{
+		// 		name: 'souk',
+		// 		records: [45, 32],
+		// 	},
+		// 	{ name: 'vira', records: [88] },
+		// ]
+	}
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+	const getMembers = () => {
+		const members = [...new Set(record.map((r) => r.name))] // ["alice", "paul"]
+		return members
+	}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+	const handleSubmit = ({ name, paid }) => {
+		const rgx = new RegExp('^-?\\d*(\\.\\d+)?$') // Only integers and floats (comma is falsy)
+		const id = Math.random().toString(36).substring(7) // Generate random short string
+		if (!rgx.test(paid)) paid = 0
+		setrecord([...record, { name: name.toLowerCase(), paid, id }])
+	}
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+	useEffect(() => {
+		getMembers()
+	}, [record])
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+	return (
+		<div className='w-full max-w-2xl mx-auto px-4'>
+			<Header />
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+			<Top record={record} currency={currency} />
+
+			{getDerivedRecords().map(({ name, records }) => (
+				<div
+					className='bg-white shadow overflow-hidden mb-4 sm:rounded-lg'
+					key={name}
+				>
+					<div className='px-3 py-3'>
+						<div className='flex justify-between items-center'>
+							<div className='flex'>
+								<div className='flex-shrink-0 h-12 w-12 mr-3'>
+									<img
+										className='block rounded-full mr-4'
+										src={`https://api.multiavatar.com/${name}.png`}
+										alt={name}
+									/>
+								</div>
+								<div>
+									<h3 className='text-base font-bold capitalize'>{name}</h3>
+									<ul>
+										{records.map((paid) => (
+											<li key={paid} className='text-sm text-gray-500'>
+												→ paid {currency}
+												{paid}
+											</li>
+										))}
+									</ul>
+								</div>
+							</div>
+							<h2 className='text-2xl font-bold'>
+								<span className='text-sm mr-1 align-top'>$</span>
+								{!records.length ? 0 : records.reduce((t, paid) => (t += paid), 0)}
+							</h2>
+						</div>
+					</div>
+				</div>
+			))}
+
+			<Form onSubmit={handleSubmit} />
+		</div>
+	)
 }
