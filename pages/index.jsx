@@ -1,20 +1,15 @@
 import Header from '../components/Header'
 import Top from '../components/Top'
 import Form from '../components/Form'
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 
 export default function Home() {
 	const [currency, setCurrency] = useState('$')
 	const [record, setrecord] = useState([])
-	const [derivedRecord, setDerivedRecord] = useState([...record])
+	const derivedRecord = useMemo(() => getDerivedRecords(record), [record])
 
-	useEffect(() => {
-		setDerivedRecord(getDerivedRecords())
-		// getMembers()
-	}, [record])
-
-	const getDerivedRecords = () => {
-		return record.reduce((acc, { name, paid }, idx) => {
+	function getDerivedRecords(record) {
+		return record.reduce((acc, { name, paid }) => {
 			if (acc.length === 0) {
 				acc.push({ name, records: [paid] })
 			} else {
@@ -29,15 +24,6 @@ export default function Home() {
 			}
 			return acc
 		}, [])
-
-		// Output similar:
-		// [
-		// 	{
-		// 		name: 'souk',
-		// 		records: [45, 32],
-		// 	},
-		// 	{ name: 'vira', records: [88] },
-		// ]
 	}
 
 	const getMembers = () => {
