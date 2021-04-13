@@ -1,6 +1,7 @@
 import Header from "../components/Header"
 import Top from "../components/Top"
 import Form from "../components/Form"
+import Record from "../components/Record"
 import { useState, useMemo } from "react"
 
 export default function Home() {
@@ -29,10 +30,10 @@ export default function Home() {
     }, [])
   }
 
-  const getMembers = () => {
-    const members = [...new Set(record.map(r => r.name))] // ["alice", "paul"]
-    return members
-  }
+  // const getMembers = () => {
+  //   const members = [...new Set(record.map(r => r.name))] // ["alice", "paul"]
+  //   return members
+  // }
 
   const handleSubmit = ({ name, paid }) => {
     const rgx = new RegExp("^-?\\d*(\\.\\d+)?$") // Only integers and floats (comma is falsy)
@@ -44,16 +45,24 @@ export default function Home() {
     ])
   }
 
+  // Find and remove record by target name and amount paid
+  const removeRecord = ({ name, paid }) => {
+    const foundIndex = record.findIndex(r => r.paid === paid && r.name === name)
+    if (foundIndex > -1) {
+      setrecord(record.filter((r, ix) => ix !== foundIndex))
+    }
+  }
+
   return (
-    <div className="w-full max-w-2xl mx-auto px-4">
+    <div className="w-full max-w-lg mx-auto px-4">
       <Header />
 
       <Top record={record} currency={currency} />
 
       {derivedRecord.map(({ name, records }) => (
         <div
-          className="bg-white shadow overflow-hidden mb-4 sm:rounded-lg"
           key={name}
+          className="bg-white border overflow-hidden mb-4 rounded-lg transition-opacity duration-700 ease-in-out"
         >
           <div className="px-3 py-3">
             <div className="flex justify-between items-center">
@@ -69,10 +78,13 @@ export default function Home() {
                   <h3 className="text-base font-bold capitalize">{name}</h3>
                   <ul>
                     {records.map(paid => (
-                      <li key={paid} className="text-sm text-gray-500">
-                        → paid {currency}
-                        {paid}
-                      </li>
+                      <Record
+                        key={name + paid}
+                        name={name}
+                        paid={paid}
+                        currency={currency}
+                        onRemove={removeRecord}
+                      />
                     ))}
                   </ul>
                 </div>
