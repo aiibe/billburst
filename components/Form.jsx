@@ -28,7 +28,7 @@ export default function Form({ onSubmit }) {
         </div>
         <div className="w-1/2 ml-2">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-            Amount
+            Amount $
           </label>
           <input
             required={true}
