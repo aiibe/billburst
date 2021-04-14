@@ -1,6 +1,8 @@
+import {motion} from "framer-motion"
+
 export default function Record({ paid, name, currency, onRemove }) {
   return (
-    <li className="text-sm text-gray-500 mt-2">
+    <motion.li layout className="text-sm text-gray-500 mt-2">
       → paid {currency}
       {paid}
       <span
@@ -9,6 +11,6 @@ export default function Record({ paid, name, currency, onRemove }) {
       >
         remove
       </span>
-    </li>
+    </motion.li>
   )
 }

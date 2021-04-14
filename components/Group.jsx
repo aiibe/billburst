@@ -7,21 +7,21 @@ export default function Group({ name, records, children }) {
         <div className="flex justify-between items-center">
           <div className="flex">
             <div className="flex-shrink-0 h-12 w-12 mr-3">
-              <img
+              <motion.img layout
                 className="block rounded-full mr-4"
                 src={`https://api.multiavatar.com/${name}.png`}
                 alt={name}
               />
             </div>
             <div>
-              <h3 className="text-base font-bold capitalize">{name}</h3>
-              <ul>{children}</ul>
+              <motion.h3 layout className="text-base font-bold capitalize">{name}</motion.h3>
+              <ul layout>{children}</ul>
             </div>
           </div>
-          <h2 className="text-2xl font-bold">
+          <motion.h2 layout className="text-2xl font-bold">
             <span className="text-sm mr-1 align-top">$</span>
             {!records.length ? 0 : records.reduce((t, paid) => (t += paid), 0)}
-          </h2>
+          </motion.h2>
         </div>
       </div>
     </motion.div>
