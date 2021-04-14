@@ -4,6 +4,7 @@ import Form from "../components/Form"
 import Record from "../components/Record"
 import Group from "../components/Group"
 import { useState, useMemo } from "react"
+import { randString } from "utils"
 
 export default function Home() {
   const [currency, setCurrency] = useState("$")
@@ -38,11 +39,10 @@ export default function Home() {
 
   const handleSubmit = ({ name, paid }) => {
     const rgx = new RegExp("^-?\\d*(\\.\\d+)?$") // Only integers and floats (comma is falsy)
-    const id = Math.random().toString(36).substring(7) // Generate random short string
     if (!rgx.test(paid)) paid = 0
     setrecord([
       ...record,
-      { name: name.toLowerCase().trim(), paid: parseFloat(paid), id },
+      { name: name.toLowerCase().trim(), paid: parseFloat(paid), id: randString() },
     ])
   }
 
@@ -65,7 +65,7 @@ export default function Home() {
           <ul>
             {records.map(paid => (
               <Record
-                key={name + paid}
+                key={name + randString()}
                 name={name}
                 paid={paid}
                 currency={currency}

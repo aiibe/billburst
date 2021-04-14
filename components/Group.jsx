@@ -15,7 +15,7 @@ export default function Group({ name, records, children }) {
             </div>
             <div>
               <motion.h3 layout className="text-base font-bold capitalize">{name}</motion.h3>
-              <ul layout>{children}</ul>
+              <ul>{children}</ul>
             </div>
           </div>
           <motion.h2 layout className="text-2xl font-bold">
