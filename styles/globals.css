@@ -14,3 +14,19 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.zitem-enter {
+  opacity: 0;
+}
+.zitem-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.zitem-exit {
+  opacity: 1;
+}
+.zitem-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+

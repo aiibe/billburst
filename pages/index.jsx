@@ -4,7 +4,6 @@ import Form from "../components/Form"
 import Record from "../components/Record"
 import Group from "../components/Group"
 import { useState, useMemo } from "react"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 export default function Home() {
   const [currency, setCurrency] = useState("$")
