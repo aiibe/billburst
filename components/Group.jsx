@@ -2,8 +2,8 @@ import {motion} from 'framer-motion'
 
 export default function Group({ name, records, children }) {
   return (
-    <motion.div layout className="bg-white border overflow-hidden mb-4 rounded-lg">
-      <div className="px-3 py-3">
+    <motion.div layout>
+      <div className="px-3 py-3 bg-white border overflow-hidden mb-4 rounded-lg">
         <div className="flex justify-between items-center">
           <div className="flex">
             <div className="flex-shrink-0 h-12 w-12 mr-3">

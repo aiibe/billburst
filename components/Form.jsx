@@ -12,7 +12,7 @@ export default function Form({ onSubmit }) {
   }
 
   return (
-    <motion.form layout onSubmit={handleSubmit}>
+    <motion.form layout onSubmit={handleSubmit} className="mb-8">
       <div className="flex mb-2">
         <div className="w-1/2 mr-2 mb-3">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
@@ -43,7 +43,7 @@ export default function Form({ onSubmit }) {
       </div>
       <button
         type="submit"
-        className="mb-4 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+        className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
       >
         Add Expense
       </button>

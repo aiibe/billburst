@@ -3,6 +3,7 @@ import Top from "../components/Top"
 import Form from "../components/Form"
 import Record from "../components/Record"
 import Group from "../components/Group"
+import Settle from "../components/Settle"
 import { useState, useMemo } from "react"
 import { randString } from "utils"
 
@@ -10,6 +11,7 @@ export default function Home() {
   const [currency, setCurrency] = useState("$")
   const [record, setrecord] = useState([])
   const derivedRecord = useMemo(() => getDerivedRecords(record), [record])
+  const totalSpent = getTotalSpent()
 
   function getDerivedRecords(record) {
     return record.reduce((acc, { name, paid }) => {
@@ -37,12 +39,21 @@ export default function Home() {
   //   return members
   // }
 
+  function getTotalSpent(){
+    return !record.length ? 0 : record.reduce((t, r) => (t += r.paid), 0)
+  }
+
+  // User Events
   const handleSubmit = ({ name, paid }) => {
     const rgx = new RegExp("^-?\\d*(\\.\\d+)?$") // Only integers and floats (comma is falsy)
-    if (!rgx.test(paid)) paid = 0
+    if (!rgx.test(paid) || paid <= 0) return
     setrecord([
       ...record,
-      { name: name.toLowerCase().trim(), paid: parseFloat(paid), id: randString() },
+      {
+        name: name.toLowerCase().trim(),
+        paid: parseFloat(paid),
+        id: randString(),
+      },
     ])
   }
 
@@ -58,7 +69,7 @@ export default function Home() {
     <div className="w-full max-w-lg mx-auto px-4">
       <Header />
 
-      <Top record={record} currency={currency} />
+      <Top total={totalSpent} currency={currency} />
 
       {derivedRecord.map(({ name, records }) => (
         <Group key={name} name={name} records={records}>
@@ -77,6 +88,9 @@ export default function Home() {
       ))}
 
       <Form onSubmit={handleSubmit} />
+
+      <Settle totalSpent={totalSpent} derivedRecord={derivedRecord} record={record} />
+
     </div>
   )
 }
