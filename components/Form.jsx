@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { motion } from "framer-motion"
 
 export default function Form({ onSubmit }) {
   const initialState = Object.freeze({ name: "", paid: "" })
@@ -11,7 +12,7 @@ export default function Form({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <motion.form layout onSubmit={handleSubmit}>
       <div className="flex mb-2">
         <div className="w-1/2 mr-2 mb-3">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
@@ -46,6 +47,6 @@ export default function Form({ onSubmit }) {
       >
         Add Expense
       </button>
-    </form>
+    </motion.form>
   )
 }

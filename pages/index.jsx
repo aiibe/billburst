@@ -60,21 +60,23 @@ export default function Home() {
 
       <Top record={record} currency={currency} />
 
-      {derivedRecord.map(({ name, records }) => (
-        <Group key={name} name={name} records={records}>
-          <ul>
-            {records.map(paid => (
-              <Record
-                key={name + paid}
-                name={name}
-                paid={paid}
-                currency={currency}
-                onRemove={removeRecord}
-              />
-            ))}
-          </ul>
-        </Group>
-      ))}
+      <div>
+        {derivedRecord.map(({ name, records }) => (
+          <Group key={name} name={name} records={records}>
+            <ul>
+              {records.map(paid => (
+                <Record
+                  key={name + paid}
+                  name={name}
+                  paid={paid}
+                  currency={currency}
+                  onRemove={removeRecord}
+                />
+              ))}
+            </ul>
+          </Group>
+        ))}
+      </div>
 
       <Form onSubmit={handleSubmit} />
     </div>
