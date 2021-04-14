@@ -5,7 +5,7 @@ export default function Top({ total=0, currency = "$" }) {
         <h3 className="text-2xl text-gray-900 font-bold">
           Total Spent
         </h3>
-        <p className="mt-1 max-w-2xl text-sm text-gray-500">
+        <p className="mt-1 max-w-2xl text-gray-500">
           Add your expenses to begin
         </p>
       </div>

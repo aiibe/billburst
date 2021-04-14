@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { randString } from "utils"
 
-export default function Settle({ derivedRecord, record, totalSpent }) {
+export default function Settle({ derivedRecord, clearAll, totalSpent }) {
   const totalMembers = derivedRecord.length
   const averageCost = parseFloat(totalSpent / totalMembers).toFixed(2)
   const steps = getSteps()
@@ -14,22 +14,20 @@ export default function Settle({ derivedRecord, record, totalSpent }) {
     })
     const owees = members.filter(m => m.owe)
     const lenders = members.filter(m => m.lend)
-    // console.log(members)
+
+    // Inevitable mutation
     let allSteps = []
     if (members.length) {
       for (let i = 0; i < owees.length; i++) {
         for (let j = 0; j < lenders.length; j++) {
           if (lenders[j].lend > 0) {
             const sub = (lenders[j].lend - owees[i].owe).toFixed(2)
-            allSteps = [
-              [
-                owees[i].name,
-                sub > 0 ? owees[i].owe : lenders[j].lend,
-                lenders[j].name,
-              ],
-              ...allSteps,
+            const newStep = [
+              owees[i].name,
+              sub > 0 ? owees[i].owe : lenders[j].lend,
+              lenders[j].name,
             ]
-            //   console.log([owees[i].name, (sub > 0 ? owees[i].owe : lenders[j].lend), lenders[j].name ]);
+            allSteps.push(newStep)
             lenders[j].lend = Math.abs(sub)
             if (sub >= 0) {
               owees[i].owe = 0
@@ -42,9 +40,6 @@ export default function Settle({ derivedRecord, record, totalSpent }) {
         }
       }
     }
-
-    // console.log(allSteps)
-
     return allSteps
   }
 
@@ -56,43 +51,45 @@ export default function Settle({ derivedRecord, record, totalSpent }) {
   return (
     <motion.div layout className="mb-8">
       {derivedRecord.length > 1 && (
-        <motion.div>
-          <div className="mb-4">
-            <h2 className="font-bold mb-2 text-2xl">Settle Up</h2>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+        <div>
+          <div className="mb-4 text-center">
+            <h2 className="font-bold mb-2 text-2xl">How To Settle Up</h2>
+            <p className="mt-1 max-w-2xl text-gray-500">
               Follow steps to settle up
             </p>
-            <p>Each person average cost : {averageCost}</p>
           </div>
-          <div className="px-3 py-3 bg-green-400 mb-4 rounded-lg text-white">
+          <div className="mb-4">
             {steps.map(m => (
               <div
                 key={randString()}
-                className="flex justify-between items-center mb-2"
+                className="flex justify-between items-center border mb-2 p-3 bg-white rounded-lg"
               >
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col items-center">
                   <img
-                    className="block rounded-full mr-4 h-12 w-12"
+                    className="block rounded-full h-12 w-12"
                     src={`https://api.multiavatar.com/${m[0]}.png`}
                     alt=""
                   />
-                  <span className="text-base font-bold capitalize">{m[0]}</span>
+                  <span className="font-bold capitalize">{m[0]}</span>
                 </div>
                 <span>→</span>
-                <span className="font-bold text-lg">${m[1]}</span>
+                <span className="font-bold text-xl text-center text-green-600">${m[1]}</span>
                 <span>→</span>
-                <div className="flex justify-between items-center">
-                  <span className="text-base font-bold capitalize">{m[2]}</span>
+                <div className="flex flex-col items-center">
                   <img
-                    className="block rounded-full ml-4 h-12 w-12"
+                    className="block rounded-full h-12 w-12"
                     src={`https://api.multiavatar.com/${m[2]}.png`}
                     alt=""
                   />
+                  <span className="font-bold capitalize">{m[2]}</span>
                 </div>
               </div>
             ))}
           </div>
-        </motion.div>
+          <button onClick={() => clearAll()} className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500">
+            Clear All
+          </button>
+        </div>
       )}
     </motion.div>
   )

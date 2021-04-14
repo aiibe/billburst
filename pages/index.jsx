@@ -34,11 +34,6 @@ export default function Home() {
     }, [])
   }
 
-  // const getMembers = () => {
-  //   const members = [...new Set(record.map(r => r.name))] // ["alice", "paul"]
-  //   return members
-  // }
-
   function getTotalSpent(){
     return !record.length ? 0 : record.reduce((t, r) => (t += r.paid), 0)
   }
@@ -89,7 +84,7 @@ export default function Home() {
 
       <Form onSubmit={handleSubmit} />
 
-      <Settle totalSpent={totalSpent} derivedRecord={derivedRecord} record={record} />
+      <Settle totalSpent={totalSpent} derivedRecord={derivedRecord} clearAll={() => setrecord([])} />
 
     </div>
   )
