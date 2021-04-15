@@ -18,13 +18,15 @@ export default function Form({ onSubmit }) {
         <div className="w-1/2 mr-2 mb-3">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
             Name
-            <span className="font-normal normal-case text-xs text-gray-400 ml-2">{maxLength} characters max.</span>
+            <span className="font-normal normal-case text-xs text-gray-400 ml-2">
+              {maxLength} characters max.
+            </span>
           </label>
           <input
             maxLength={maxLength}
             required={true}
             onChange={event => setstate({ ...state, name: event.target.value })}
-            className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2 focus:outline-none focus:ring focus:border-blue-300 shadow-none"
             type="text"
             placeholder="Jane"
             value={state.name}
@@ -33,12 +35,14 @@ export default function Form({ onSubmit }) {
         <div className="w-1/2 ml-2">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
             Amount
-            <span className="font-normal normal-case text-xs text-gray-400 ml-2">Numbers</span>
+            <span className="font-normal normal-case text-xs text-gray-400 ml-2">
+              Numbers
+            </span>
           </label>
           <input
             required={true}
             onChange={event => setstate({ ...state, paid: event.target.value })}
-            className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2 focus:outline-none focus:ring focus:border-blue-300"
+            className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2 focus:outline-none focus:ring focus:border-blue-300 shadow-none"
             type="text"
             placeholder="33.1"
             value={state.paid}
