@@ -64,7 +64,7 @@ export default function Home() {
     <div className="w-full max-w-lg mx-auto px-4">
       <Header />
 
-      <div className="text-center text-gray-500 mt-2 mb-4" s>
+      <div className="text-center text-gray-500 my-6" s>
         <p className="font-bold text-2xl">Quickly split your bill.</p>
         <p className="text-base">No login required. No data sent.</p>
       </div>
