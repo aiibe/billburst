@@ -65,7 +65,7 @@ export default function Home() {
       <Header />
 
       <div className="text-center text-gray-500 mt-2 mb-4" s>
-        <p className="font-bold text-lg">Quickly split your bill.</p>
+        <p className="font-bold text-2xl">Quickly split your bill.</p>
         <p className="text-base">No login required. No data sent.</p>
       </div>
 

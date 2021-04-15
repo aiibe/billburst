@@ -1,6 +1,6 @@
 export default function Top({ total=0, currency = "$" }) {
   return (
-    <div className="flex justify-between items-center mb-4">
+    <div className="flex justify-between items-start mb-4">
       <div>
         <h3 className="text-2xl text-gray-900 font-bold">
           Total Spent
