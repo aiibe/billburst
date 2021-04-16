@@ -10,10 +10,10 @@ import { randString } from "utils"
 export default function Home() {
   const [currency, setCurrency] = useState("$")
   const [record, setrecord] = useState([])
-  const derivedRecord = useMemo(() => getDerivedRecords(record), [record])
+  const derivedRecord = useMemo(() => getDerivedRecords(), [record])
   const totalSpent = getTotalSpent()
 
-  function getDerivedRecords(record) {
+  function getDerivedRecords() {
     return record.reduce((acc, { name, paid }) => {
       if (acc.length === 0) {
         acc.push({ name, records: [paid] })
@@ -64,7 +64,7 @@ export default function Home() {
     <div className="w-full max-w-lg mx-auto px-4">
       <Header />
 
-      <div className="text-center text-gray-500 my-6" s>
+      <div className="text-center text-gray-500 my-6">
         <p className="font-bold text-2xl">Quickly split your bill.</p>
         <p className="text-base">No login required. No data sent.</p>
       </div>
@@ -74,9 +74,9 @@ export default function Home() {
       {derivedRecord.map(({ name, records }) => (
         <Group key={name} name={name} records={records}>
           <ul>
-            {records.map(paid => (
+            {records.map((paid, idx) => (
               <Record
-                key={name + randString()}
+                key={name + idx}
                 name={name}
                 paid={paid}
                 currency={currency}
