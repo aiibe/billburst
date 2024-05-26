@@ -1,15 +1,33 @@
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useState } from "react";
+import { motion } from "framer-motion";
 
-export default function Form({ onSubmit }) {
-  const initialState = Object.freeze({ name: "", paid: "" })
-  const [state, setstate] = useState(initialState)
-  const maxLength = 8
+export type FormState = {
+  name: string;
+  paid: string;
+};
 
-  function handleSubmit(event) {
-    event.preventDefault()
-    onSubmit(state)
-    setstate(initialState)
+type Props = { onSubmit: (state: FormState) => void };
+
+/* -------------------------------- Constants ------------------------------- */
+
+const MAX_LEN = 8;
+const INIT_STATE: FormState = {
+  name: "",
+  paid: "",
+};
+
+/* -------------------------------- Component ------------------------------- */
+
+export default function Form(props: Props) {
+  const { onSubmit } = props;
+
+  const [state, setState] = useState(INIT_STATE);
+
+  // Submit form and reset state
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    onSubmit(state);
+    setState(INIT_STATE);
   }
 
   return (
@@ -19,13 +37,18 @@ export default function Form({ onSubmit }) {
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
             Name
             <span className="font-normal normal-case text-xs text-gray-400 ml-2">
-              {maxLength} characters max.
+              {MAX_LEN} characters max.
             </span>
           </label>
           <input
-            maxLength={maxLength}
+            maxLength={MAX_LEN}
             required={true}
-            onChange={event => setstate({ ...state, name: event.target.value })}
+            onChange={(event) =>
+              setState((prev) => ({
+                ...prev,
+                name: event.target.value.trim(),
+              }))
+            }
             className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2 focus:outline-none focus:ring focus:border-blue-300 shadow-none"
             type="text"
             placeholder="Jane"
@@ -35,13 +58,15 @@ export default function Form({ onSubmit }) {
         <div className="w-1/2 ml-2">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
             Amount
-            <span className="font-normal normal-case text-xs text-gray-400 ml-2">
-              Numbers
-            </span>
           </label>
           <input
             required={true}
-            onChange={event => setstate({ ...state, paid: event.target.value })}
+            onChange={(event) =>
+              setState((prev) => ({
+                ...prev,
+                paid: event.target.value,
+              }))
+            }
             className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-2 px-2 focus:outline-none focus:ring focus:border-blue-300 shadow-none"
             type="text"
             placeholder="33.1"
@@ -51,10 +76,10 @@ export default function Form({ onSubmit }) {
       </div>
       <button
         type="submit"
-        className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600"
+        className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
       >
         Add Expense
       </button>
     </motion.form>
-  )
+  );
 }
