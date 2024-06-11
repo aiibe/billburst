@@ -67,11 +67,11 @@ export default function Settle(props: Props) {
   }, [getMembers]);
 
   return (
-    <motion.div layout className="mb-8">
+    <motion.div layout className="mt-6">
       {countMembers > 1 && !!settleSteps.length && (
         <div>
           <div className="mb-4">
-            <h2 className="font-bold mb-2 text-2xl">How To Settle Up</h2>
+            <h2 className="font-bold mb-2 text-2xl">Settle Up</h2>
           </div>
           <div className="mb-4">
             {settleSteps.map(([oweeName, amount, lenderName]) => (
