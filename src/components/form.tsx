@@ -31,7 +31,7 @@ export default function Form(props: Props) {
   }
 
   return (
-    <motion.form layout onSubmit={handleSubmit} className="mb-8">
+    <motion.form layout onSubmit={handleSubmit} className="mt-4">
       <div className="flex mb-2">
         <div className="w-1/2 mr-2 mb-3">
           <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">

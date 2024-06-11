@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import Header from "@/components/header";
-import Top from "@/components/top";
+import Total from "@/components/total";
 import Transaction from "@/components/transaction";
 import Form, { FormState } from "@/components/form";
 import Settle from "@/components/settle";
-import Description from "@/components/description";
 import Group from "@/components/group";
 
 import { randString } from "./utils";
@@ -57,12 +56,10 @@ export default function Home() {
   };
 
   return (
-    <main className="w-full max-w-lg mx-auto px-4">
+    <main className="w-full max-w-lg mx-auto p-4 text-gray-700">
       <Header />
 
-      <Description />
-
-      <Top total={totalSpent} currency={currency} />
+      <Total total={totalSpent} currency={currency} />
 
       <Group
         mapTransactions={mapTransactions}

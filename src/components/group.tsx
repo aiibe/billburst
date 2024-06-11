@@ -14,7 +14,7 @@ export default function Group(props: Props) {
   const { mapTransactions, currency, onRemove } = props;
 
   return (
-    <div>
+    <div className="mt-4">
       {Object.entries(mapTransactions).map(([username, transactions]) => (
         <motion.div layout key={username}>
           <div className="px-3 py-3 bg-white border overflow-hidden mb-4 rounded-lg">
