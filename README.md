@@ -4,11 +4,7 @@
     </a>
 </p>
 
-Minimal expenses splitter, inspired by SplitWise.
-
-No account needed to use.
-
-Your financial data never leaves your browser!
+Minimal expenses splitter, inspired by SplitWise. No account needed to use. Your financial data never leaves your browser!
 
 [Try it now](https://billburst.vercel.app/)
 
