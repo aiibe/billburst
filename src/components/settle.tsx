@@ -2,7 +2,11 @@ import { useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
+
 import { randString } from "@/app/utils";
+
 import { MapTransactions } from "@/app/page";
 
 type Member = Record<string, number>;
@@ -75,49 +79,47 @@ export default function Settle(props: Props) {
           </div>
           <div className="mb-4">
             {settleSteps.map(([oweeName, amount, lenderName]) => (
-              <div
-                key={randString()}
-                className="flex justify-between items-center border mb-2 p-3 bg-white rounded-lg"
-              >
-                {/* Owe */}
-                <div className="flex flex-col items-center">
-                  <Image
-                    className="block rounded-full h-12 w-12"
-                    src={`https://api.multiavatar.com/${oweeName}.png`}
-                    alt=""
-                    width={48}
-                    height={48}
-                  />
-                  <span className="font-bold capitalize">{oweeName}</span>
-                </div>
+              <Card key={randString()} className="mb-4">
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-center">
+                    {/* Owe */}
+                    <div className="flex flex-col items-center">
+                      <Image
+                        className="block rounded-full h-12 w-12"
+                        src={`https://api.multiavatar.com/${oweeName}.png`}
+                        alt=""
+                        width={48}
+                        height={48}
+                      />
+                      <span className="font-bold capitalize">{oweeName}</span>
+                    </div>
 
-                {/* Amount */}
-                <span>→</span>
-                <span className="font-bold text-xl text-center text-orange-600">
-                  ${amount}
-                </span>
-                <span>→</span>
+                    {/* Amount */}
+                    <span>→</span>
+                    <span className="font-bold text-xl text-center text-orange-600">
+                      ${amount}
+                    </span>
+                    <span>→</span>
 
-                {/* Lender */}
-                <div className="flex flex-col items-center">
-                  <Image
-                    className="block rounded-full h-12 w-12"
-                    src={`https://api.multiavatar.com/${lenderName}.png`}
-                    alt=""
-                    width={48}
-                    height={48}
-                  />
-                  <span className="font-bold capitalize">{lenderName}</span>
-                </div>
-              </div>
+                    {/* Lender */}
+                    <div className="flex flex-col items-center">
+                      <Image
+                        className="block rounded-full h-12 w-12"
+                        src={`https://api.multiavatar.com/${lenderName}.png`}
+                        alt=""
+                        width={48}
+                        height={48}
+                      />
+                      <span className="font-bold capitalize">{lenderName}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
-          <button
-            onClick={clearAll}
-            className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 hover:bg-gray-500"
-          >
+          <Button variant="destructive" onClick={clearAll} className="w-full">
             Clear All
-          </button>
+          </Button>
         </div>
       )}
     </motion.div>
