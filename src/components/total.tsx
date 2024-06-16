@@ -8,11 +8,13 @@ export default function Total(props: Props) {
 
   return (
     <div className="flex justify-between mt-6 items-baseline font-bold">
-      <h3 className="text-2xl">Total Spent</h3>
-      <h1 className="text-2xl">
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+        Total Spent
+      </h3>
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
         <span className="text-lg mr-1">{currency}</span>
         {total.toFixed(2)}
-      </h1>
+      </h3>
     </div>
   );
 }

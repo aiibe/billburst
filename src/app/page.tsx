@@ -56,7 +56,7 @@ export default function Home() {
   };
 
   return (
-    <main className="w-full max-w-lg mx-auto p-4 text-gray-700">
+    <main className="w-full max-w-lg mx-auto p-4">
       <Header />
 
       <Total total={totalSpent} currency={currency} />

@@ -19,14 +19,9 @@ export default function RootLayout(props: Props) {
   const { children } = props;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <CSPostHogProvider>
-        <body
-          className={`${inter.className} bg-gray-100`}
-          suppressHydrationWarning={true}
-        >
-          {children}
-        </body>
+        <body className={`${inter.className} bg-background`}>{children}</body>
       </CSPostHogProvider>
     </html>
   );

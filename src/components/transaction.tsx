@@ -11,7 +11,7 @@ export default function Transaction(props: Props) {
   const { id, paid, currency, onRemove } = props;
 
   return (
-    <li className="text-sm text-gray-500 mt-2">
+    <li className="text-sm mt-2 ">
       <motion.p layout>
         {" "}
         → paid {currency}
