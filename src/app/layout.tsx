@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import { CSPostHogProvider } from "./providers";
+import { ThemeProvider } from "@/components/themeProvider";
 
 import "./globals.css";
 
@@ -27,9 +28,13 @@ export default function RootLayout(props: Props) {
   const { children } = props;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <CSPostHogProvider>
-        <body className={`${inter.className} bg-background`}>{children}</body>
+        <body className={`${inter.className}`} suppressHydrationWarning>
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            {children}
+          </ThemeProvider>
+        </body>
       </CSPostHogProvider>
     </html>
   );
