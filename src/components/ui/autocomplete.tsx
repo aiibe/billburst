@@ -83,7 +83,6 @@ export const AutoComplete = (props: Props) => {
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <CommandInput
         ref={inputRef}
-        autoFocus
         value={selected?.label || ""}
         onValueChange={(newValue) =>
           onSelect?.({ value: newValue, label: capitalize(newValue) })
