@@ -1,14 +1,19 @@
 import { motion } from "framer-motion";
 
+import { useTransactionStore } from "@/store/transactions";
+
 type Props = {
   id: string;
   paid: number;
   currency: string;
-  onRemove: (transactionId: string) => void;
 };
 
 export default function Transaction(props: Props) {
-  const { id, paid, currency, onRemove } = props;
+  const { id, paid, currency } = props;
+
+  const removeTransaction = useTransactionStore(
+    (state) => state.removeTransaction
+  );
 
   return (
     <li className="text-sm mt-2 ">
@@ -18,7 +23,7 @@ export default function Transaction(props: Props) {
         {paid}
         <span
           className="text-xs ml-2 text-red-500 cursor-pointer"
-          onClick={() => onRemove(id)}
+          onClick={() => removeTransaction(id)}
         >
           remove
         </span>

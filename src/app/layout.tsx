@@ -31,7 +31,7 @@ export default function RootLayout(props: Props) {
     <html lang="en">
       <CSPostHogProvider>
         <body className={`${inter.className}`} suppressHydrationWarning>
-          <ThemeProvider attribute="class" defaultTheme="dark">
+          <ThemeProvider attribute="class" defaultTheme="light">
             {children}
           </ThemeProvider>
         </body>

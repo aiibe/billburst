@@ -9,11 +9,10 @@ import { MapTransactions } from "@/app/page";
 type Props = {
   mapTransactions: MapTransactions;
   currency: string;
-  onRemove: (transactionId: string) => void;
 };
 
 export default function Group(props: Props) {
-  const { mapTransactions, currency, onRemove } = props;
+  const { mapTransactions, currency } = props;
 
   return (
     <div className="mt-4">
@@ -47,7 +46,6 @@ export default function Group(props: Props) {
                           id={id}
                           paid={paid}
                           currency={currency}
-                          onRemove={onRemove}
                         />
                       ))}
                     </ul>
