@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 
+import { useTransactionStore } from "@/store/transactions";
+
 import { randString } from "@/app/utils";
 
 import { MapTransactions } from "@/app/page";
@@ -13,12 +15,13 @@ type Member = Record<string, number>;
 
 type Props = {
   mapTransactions: MapTransactions;
-  clearAll: () => void;
   totalSpent: number;
 };
 
 export default function Settle(props: Props) {
-  const { mapTransactions, clearAll, totalSpent } = props;
+  const { mapTransactions, totalSpent } = props;
+
+  const clearTransactions = useTransactionStore((state) => state.clearAll);
 
   const countMembers = Object.keys(mapTransactions).length;
   const averageCost = parseFloat((totalSpent / countMembers).toFixed(2));
@@ -117,7 +120,11 @@ export default function Settle(props: Props) {
               </Card>
             ))}
           </div>
-          <Button variant="destructive" onClick={clearAll} className="w-full">
+          <Button
+            variant="destructive"
+            onClick={clearTransactions}
+            className="w-full"
+          >
             Clear All
           </Button>
         </div>
