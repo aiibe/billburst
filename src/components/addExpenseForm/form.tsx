@@ -6,7 +6,6 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { ParticipantSelect } from "./participantSelect";
 import { AmountInput } from "./amountInput";
 
-import { useParticipantStore } from "@/store/derived/participants";
 import { useTransactionStore } from "@/store/transactions";
 
 import { randString } from "@/app/utils";
@@ -27,8 +26,13 @@ const INIT_STATE: AddExpenseFormState = {
 
 // TODO Add validation - Use React Hook Form & Zod (https://ui.shadcn.com/docs/components/form)
 
-export default function AddExpenseForm() {
-  const participants = useParticipantStore();
+interface Props {
+  onAfterSubmit?: () => void;
+}
+
+export default function AddExpenseForm(props: Props) {
+  const { onAfterSubmit } = props;
+
   const addTransaction = useTransactionStore((state) => state.addTransaction);
 
   const [state, setState] = useState(INIT_STATE);
@@ -46,17 +50,18 @@ export default function AddExpenseForm() {
     });
 
     setState(INIT_STATE);
+
+    onAfterSubmit?.();
   }
 
   const disableSubmit = Object.values(state).some((value) => !value);
 
   return (
-    <motion.form layout onSubmit={handleSubmit} className="mt-4">
+    <motion.form layout onSubmit={handleSubmit}>
       <Card>
         <CardContent className="p-6">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-2 md:gap-4 md:grid-cols-2 ">
             <ParticipantSelect
-              options={participants}
               value={state.name}
               onChange={(newValue) =>
                 setState((prev) => ({

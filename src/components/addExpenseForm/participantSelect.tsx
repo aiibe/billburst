@@ -1,18 +1,22 @@
+import { useParticipantStore } from "@/store/derived/participants";
+
 import { AutoComplete } from "../ui/autocomplete";
+import { Label } from "../ui/label";
 
 import { capitalize } from "@/lib/utils";
 
 interface Props {
-  options: string[];
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;
 }
 
 export const ParticipantSelect = (props: Props) => {
-  const { options, value, onChange, disabled } = props;
+  const { value, onChange, disabled } = props;
 
-  const opts = options.map((option) => ({
+  const participants = useParticipantStore();
+
+  const opts = participants.map((option) => ({
     value: option,
     label: capitalize(option),
   }));
@@ -21,12 +25,15 @@ export const ParticipantSelect = (props: Props) => {
   if (!val) val = { value, label: capitalize(value) };
 
   return (
-    <AutoComplete
-      options={opts}
-      placeholder="Find or create new"
-      onSelect={(option) => onChange(option.label)}
-      selected={val}
-      disabled={disabled}
-    />
+    <div className="grid gap-2">
+      <Label>Participant</Label>
+      <AutoComplete
+        options={opts}
+        placeholder="Find or add a name"
+        onSelect={(option) => onChange(option.label)}
+        selected={val}
+        disabled={disabled}
+      />
+    </div>
   );
 };
