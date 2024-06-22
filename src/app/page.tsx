@@ -7,6 +7,7 @@ import Total from "@/components/total";
 import Settle from "@/components/settle";
 import Group from "@/components/group";
 import AddExpenseForm from "@/components/addExpenseForm/form";
+import AddExpenseDialog from "@/components/addExpenseForm/dialog";
 
 import { useTransactionStore, Transaction } from "@/store/transactions";
 
@@ -43,7 +44,7 @@ export default function Home() {
 
       <Group mapTransactions={mapTransactions} currency={currency} />
 
-      <AddExpenseForm />
+      {transactions.length <= 1 ? <AddExpenseForm /> : <AddExpenseDialog />}
 
       <Settle totalSpent={totalSpent} mapTransactions={mapTransactions} />
     </main>

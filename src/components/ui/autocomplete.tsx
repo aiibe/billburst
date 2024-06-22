@@ -130,8 +130,8 @@ export const AutoComplete = (props: Props) => {
 
             <CommandPrimitive.Empty className="select-none rounded-sm px-2 py-3 text-center text-sm text-muted-foreground">
               {selected?.value.length
-                ? `Hit Enter to add "${selected?.label}"`
-                : "Type a name and hit Enter"}
+                ? `Add "${selected?.label}"`
+                : "Type a name"}
             </CommandPrimitive.Empty>
           </CommandList>
         </div>

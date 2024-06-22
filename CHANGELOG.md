@@ -1,4 +1,12 @@
+# 0.2.1
+
+### REFACTORS
+
+- Put form in dialog
+
 # 0.2.0
+
+### FEATURES
 
 - Add zustand store
 - Add autocomplete to find participants or add new ones
