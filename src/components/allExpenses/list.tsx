@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ExpenseItem } from "./item";
 import { useMapTransactionsByName } from "@/store/derived/transactionsByName";
 import { ExpenseEmpty } from "./emptyList";
@@ -14,8 +13,7 @@ export const ExpenseList = () => {
   return (
     <ul>
       {Object.entries(mapTransactions).map(([username, userTransactions]) => (
-        <motion.li
-          layout
+        <li
           key={username}
           className="border-b py-2 first:pt-0 last:border-b-0 last:pb-0"
         >
@@ -42,7 +40,7 @@ export const ExpenseList = () => {
               />
             ))}
           </ul>
-        </motion.li>
+        </li>
       ))}
     </ul>
   );

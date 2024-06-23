@@ -15,7 +15,6 @@ export const DescriptionInput = (props: Props) => {
       <Input
         id="description"
         autoComplete="off"
-        required={true}
         onChange={(event) => onChange(event.target.value)}
         type="text"
         placeholder="House cleaning"

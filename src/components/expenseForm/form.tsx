@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { ParticipantSelect } from "./participantSelect";
@@ -20,7 +19,7 @@ type AddExpenseFormState = {
 
 const INIT_STATE: AddExpenseFormState = {
   name: "",
-  paid: "",
+  paid: "0",
   description: "",
 };
 
@@ -44,7 +43,7 @@ export default function AddExpenseForm(props: Props) {
     event.preventDefault();
 
     const rgx = new RegExp("^-?\\d*(\\.\\d+)?$"); // Only integers and floats (comma is falsy)
-    if (!rgx.test(state.paid) || parseFloat(state.paid) <= 0) return;
+    if (!rgx.test(state.paid)) return;
     addTransaction({
       id: randString(),
       name: state.name,
@@ -57,12 +56,10 @@ export default function AddExpenseForm(props: Props) {
     onAfterSubmit?.();
   }
 
-  const disableSubmit = Object.values([state.name, state.paid]).some(
-    (value) => !value
-  );
+  const disableSubmit = !state.name;
 
   return (
-    <motion.form layout onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="grid gap-2 md:gap-4 md:grid-cols-2 ">
         <ParticipantSelect
           value={state.name}
@@ -98,6 +95,6 @@ export default function AddExpenseForm(props: Props) {
       <Button className="w-full mt-6" type="submit" disabled={disableSubmit}>
         Add Expense
       </Button>
-    </motion.form>
+    </form>
   );
 }
