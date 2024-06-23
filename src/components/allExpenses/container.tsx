@@ -18,15 +18,13 @@ export default function Expenses() {
         </div>
       </CardContent>
 
-      {
-        <CardFooter className="border-t flex justify-between py-4">
-          {/* Add expense */}
-          <AddExpenseDialog />
+      <CardFooter className="border-t flex justify-between py-4">
+        {/* Add expense */}
+        <AddExpenseDialog />
 
-          {/* Settle */}
-          <SplitExpensesDialog />
-        </CardFooter>
-      }
+        {/* Settle */}
+        <SplitExpensesDialog />
+      </CardFooter>
     </Card>
   );
 }

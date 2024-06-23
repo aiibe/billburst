@@ -27,13 +27,13 @@ export const ExpenseItem = (props: Props) => {
         </button>
 
         {/* Description */}
-        {description ? (
-          <span className="tracking-tight">{description}</span>
-        ) : (
-          <span className="tracking-tight text-muted-foreground">
-            No description
-          </span>
-        )}
+        <span
+          className={`tracking-tight ${
+            !description && "text-muted-foreground italic"
+          }`}
+        >
+          {description || "No description"}
+        </span>
       </p>
       <p className="text-right">${paid}</p>
     </li>

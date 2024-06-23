@@ -3,10 +3,12 @@
 ### FIXES
 
 - Add missing description
+- Add participant with zero amount
 
 ### REFACTORS
 
 - UI refactor
+- Remove framer motion
 
 # 0.2.1
 
