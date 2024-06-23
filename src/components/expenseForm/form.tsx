@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "../ui/card";
 import { ParticipantSelect } from "./participantSelect";
 import { AmountInput } from "./amountInput";
 
@@ -58,37 +57,31 @@ export default function AddExpenseForm(props: Props) {
 
   return (
     <motion.form layout onSubmit={handleSubmit}>
-      <Card>
-        <CardContent className="p-6">
-          <div className="grid gap-2 md:gap-4 md:grid-cols-2 ">
-            <ParticipantSelect
-              value={state.name}
-              onChange={(newValue) =>
-                setState((prev) => ({
-                  ...prev,
-                  name: newValue,
-                }))
-              }
-            />
+      <div className="grid gap-2 md:gap-4 md:grid-cols-2 ">
+        <ParticipantSelect
+          value={state.name}
+          onChange={(newValue) =>
+            setState((prev) => ({
+              ...prev,
+              name: newValue,
+            }))
+          }
+        />
 
-            <AmountInput
-              value={state.paid}
-              onChange={(newValue) =>
-                setState((prev) => ({
-                  ...prev,
-                  paid: newValue,
-                }))
-              }
-            />
-          </div>
-        </CardContent>
+        <AmountInput
+          value={state.paid}
+          onChange={(newValue) =>
+            setState((prev) => ({
+              ...prev,
+              paid: newValue,
+            }))
+          }
+        />
+      </div>
 
-        <CardFooter>
-          <Button className="w-full" type="submit" disabled={disableSubmit}>
-            Add Expense
-          </Button>
-        </CardFooter>
-      </Card>
+      <Button className="w-full mt-4" type="submit" disabled={disableSubmit}>
+        Add Expense
+      </Button>
     </motion.form>
   );
 }

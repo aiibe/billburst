@@ -1,3 +1,9 @@
+# 0.2.2
+
+### REFACTORS
+
+- UI refactor
+
 # 0.2.1
 
 ### REFACTORS
