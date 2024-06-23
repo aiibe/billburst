@@ -1,8 +1,10 @@
+import { Fragment } from "react";
+
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 interface Props {
-  value: string;
+  value: number;
   onChange: (value: string) => void;
 }
 
@@ -10,7 +12,7 @@ export const AmountInput = (props: Props) => {
   const { value, onChange } = props;
 
   return (
-    <div className="grid gap-2">
+    <Fragment>
       <Label htmlFor="paid">Amount *</Label>
       <Input
         id="paid"
@@ -22,6 +24,6 @@ export const AmountInput = (props: Props) => {
         value={value}
         className="text-right h-10 focus-visible:ring-0"
       />
-    </div>
+    </Fragment>
   );
 };

@@ -1,31 +1,37 @@
-import { useState } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { ParticipantSelect } from "./participantSelect";
 import { AmountInput } from "./amountInput";
 import { DescriptionInput } from "./descriptionInput";
+import { Form, FormField, FormMessage } from "../ui/form";
 
 import { useTransactionStore } from "@/store/transactions";
 
 import { randString } from "@/app/utils";
 
-type AddExpenseFormState = {
-  name: string;
-  paid: string;
-  description: string;
-};
-
 /* -------------------------------- Constants ------------------------------- */
 
-const INIT_STATE: AddExpenseFormState = {
+const expenseFormSchema = z.object({
+  name: z.string().min(2).max(8),
+  paid: z.preprocess(
+    (s) => parseFloat(z.string().parse(s).replace(",", ".")),
+    z.number().min(0).max(1000000)
+  ),
+  description: z.string().max(100).optional(),
+});
+
+const INIT_STATE = {
   name: "",
-  paid: "0",
+  paid: 0,
   description: "",
 };
 
 /* -------------------------------- Component ------------------------------- */
 
-// TODO Add validation - Use React Hook Form & Zod (https://ui.shadcn.com/docs/components/form)
+type AddExpenseFormState = z.infer<typeof expenseFormSchema>;
 
 interface Props {
   onAfterSubmit?: () => void;
@@ -36,65 +42,69 @@ export default function AddExpenseForm(props: Props) {
 
   const addTransaction = useTransactionStore((state) => state.addTransaction);
 
-  const [state, setState] = useState(INIT_STATE);
+  const form = useForm<AddExpenseFormState>({
+    resolver: zodResolver(expenseFormSchema),
+    defaultValues: INIT_STATE,
+  });
 
-  // Submit form and reset state
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const rgx = new RegExp("^-?\\d*(\\.\\d+)?$"); // Only integers and floats (comma is falsy)
-    if (!rgx.test(state.paid)) return;
+  // Submit form
+  const onSubmit = (values: AddExpenseFormState) => {
     addTransaction({
+      ...values,
       id: randString(),
-      name: state.name,
-      paid: parseFloat(state.paid),
-      description: state.description,
     });
 
-    setState(INIT_STATE);
-
     onAfterSubmit?.();
-  }
-
-  const disableSubmit = !state.name;
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="grid gap-2 md:gap-4 md:grid-cols-2 ">
-        <ParticipantSelect
-          value={state.name}
-          onChange={(newValue) =>
-            setState((prev) => ({
-              ...prev,
-              name: newValue,
-            }))
-          }
-        />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="grid gap-2 md:gap-4 md:grid-cols-2 ">
+          <FormField
+            name="name"
+            control={form.control}
+            render={({ field }) => (
+              <div className="flex flex-col gap-2">
+                <ParticipantSelect
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+                <FormMessage />
+              </div>
+            )}
+          />
 
-        <AmountInput
-          value={state.paid}
-          onChange={(newValue) =>
-            setState((prev) => ({
-              ...prev,
-              paid: newValue,
-            }))
-          }
-        />
+          <FormField
+            name="paid"
+            control={form.control}
+            render={({ field }) => (
+              <div className="flex flex-col gap-2">
+                <AmountInput value={field.value} onChange={field.onChange} />
+                <FormMessage />
+              </div>
+            )}
+          />
 
-        <DescriptionInput
-          value={state.description}
-          onChange={(newValue) =>
-            setState((prev) => ({
-              ...prev,
-              description: newValue,
-            }))
-          }
-        />
-      </div>
+          <FormField
+            name="description"
+            control={form.control}
+            render={({ field }) => (
+              <div className="md:col-span-2">
+                <DescriptionInput
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+                <FormMessage />
+              </div>
+            )}
+          />
+        </div>
 
-      <Button className="w-full mt-6" type="submit" disabled={disableSubmit}>
-        Add Expense
-      </Button>
-    </form>
+        <Button className="w-full mt-6" type="submit">
+          Add Expense
+        </Button>
+      </form>
+    </Form>
   );
 }
