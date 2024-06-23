@@ -1,8 +1,10 @@
+import { Fragment } from "react";
+
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 interface Props {
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
 }
 
@@ -10,7 +12,7 @@ export const DescriptionInput = (props: Props) => {
   const { value, onChange } = props;
 
   return (
-    <div className="md:col-span-2">
+    <Fragment>
       <Label htmlFor="description">Description</Label>
       <Input
         id="description"
@@ -19,8 +21,8 @@ export const DescriptionInput = (props: Props) => {
         type="text"
         placeholder="House cleaning"
         value={value}
-        className="text-right h-10 focus-visible:ring-0"
+        className="h-10 focus-visible:ring-0"
       />
-    </div>
+    </Fragment>
   );
 };

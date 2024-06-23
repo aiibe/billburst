@@ -1,3 +1,9 @@
+# 0.3.0
+
+### FEATURES
+
+- Enhanced form validation
+
 # 0.2.2
 
 ### FIXES

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useParticipantStore } from "@/store/derived/participants";
 
 import { AutoComplete } from "../ui/autocomplete";
@@ -25,7 +26,7 @@ export const ParticipantSelect = (props: Props) => {
   if (!val) val = { value, label: capitalize(value) };
 
   return (
-    <div className="grid gap-2">
+    <Fragment>
       <Label htmlFor="participants">Participant *</Label>
       <AutoComplete
         id="participants"
@@ -35,6 +36,6 @@ export const ParticipantSelect = (props: Props) => {
         selected={val}
         disabled={disabled}
       />
-    </div>
+    </Fragment>
   );
 };

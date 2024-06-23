@@ -28,7 +28,7 @@ export const ExpenseItem = (props: Props) => {
 
         {/* Description */}
         <span
-          className={`tracking-tight ${
+          className={`tracking-tight truncate ${
             !description && "text-muted-foreground italic"
           }`}
         >
