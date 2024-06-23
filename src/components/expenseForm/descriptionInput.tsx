@@ -6,19 +6,19 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export const AmountInput = (props: Props) => {
+export const DescriptionInput = (props: Props) => {
   const { value, onChange } = props;
 
   return (
-    <div className="grid gap-2">
-      <Label htmlFor="paid">Amount *</Label>
+    <div className="md:col-span-2">
+      <Label htmlFor="description">Description</Label>
       <Input
-        id="paid"
+        id="description"
         autoComplete="off"
         required={true}
         onChange={(event) => onChange(event.target.value)}
         type="text"
-        placeholder="$33.1"
+        placeholder="House cleaning"
         value={value}
         className="text-right h-10 focus-visible:ring-0"
       />

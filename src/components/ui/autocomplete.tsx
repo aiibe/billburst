@@ -25,6 +25,7 @@ import { capitalize, cn } from "@/lib/utils";
 export type Option = Record<"value" | "label", string> & Record<string, string>;
 
 type Props = {
+  id?: string;
   options: Option[];
   selected?: Option;
   onSelect?: (value: Option) => void;
@@ -33,7 +34,7 @@ type Props = {
 };
 
 export const AutoComplete = (props: Props) => {
-  const { options, selected, onSelect } = props;
+  const { id, options, selected, onSelect } = props;
   const { placeholder, disabled } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -82,6 +83,7 @@ export const AutoComplete = (props: Props) => {
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <CommandInput
+        id={id}
         ref={inputRef}
         value={selected?.label || ""}
         onValueChange={(newValue) =>

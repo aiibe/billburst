@@ -33,11 +33,11 @@ export const ExpenseList = () => {
 
           {/* User expenses list */}
           <ul>
-            {userTransactions.map(({ id, paid }) => (
+            {userTransactions.map(({ id, paid, description }) => (
               <ExpenseItem
                 key={id}
                 id={id}
-                description={""} // TODO Add description
+                description={description}
                 paid={paid}
               />
             ))}

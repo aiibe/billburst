@@ -4,8 +4,8 @@ import { Cross2Icon } from "@radix-ui/react-icons";
 
 interface Props {
   id: string;
-  description: string;
   paid: number;
+  description?: string;
 }
 
 export const ExpenseItem = (props: Props) => {
