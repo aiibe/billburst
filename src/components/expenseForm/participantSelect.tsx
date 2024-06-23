@@ -26,8 +26,9 @@ export const ParticipantSelect = (props: Props) => {
 
   return (
     <div className="grid gap-2">
-      <Label>Participant</Label>
+      <Label htmlFor="participants">Participant *</Label>
       <AutoComplete
+        id="participants"
         options={opts}
         placeholder="Find or add a name"
         onSelect={(option) => onChange(option.label)}

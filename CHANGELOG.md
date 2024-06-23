@@ -1,5 +1,9 @@
 # 0.2.2
 
+### FIXES
+
+- Add missing description
+
 ### REFACTORS
 
 - UI refactor

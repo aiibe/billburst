@@ -4,6 +4,7 @@ export type Transaction = {
   id: string;
   name: string;
   paid: number;
+  description?: string;
 };
 
 interface TransactionState {

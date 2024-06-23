@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ParticipantSelect } from "./participantSelect";
 import { AmountInput } from "./amountInput";
+import { DescriptionInput } from "./descriptionInput";
 
 import { useTransactionStore } from "@/store/transactions";
 
@@ -12,6 +13,7 @@ import { randString } from "@/app/utils";
 type AddExpenseFormState = {
   name: string;
   paid: string;
+  description: string;
 };
 
 /* -------------------------------- Constants ------------------------------- */
@@ -19,6 +21,7 @@ type AddExpenseFormState = {
 const INIT_STATE: AddExpenseFormState = {
   name: "",
   paid: "",
+  description: "",
 };
 
 /* -------------------------------- Component ------------------------------- */
@@ -43,9 +46,10 @@ export default function AddExpenseForm(props: Props) {
     const rgx = new RegExp("^-?\\d*(\\.\\d+)?$"); // Only integers and floats (comma is falsy)
     if (!rgx.test(state.paid) || parseFloat(state.paid) <= 0) return;
     addTransaction({
+      id: randString(),
       name: state.name,
       paid: parseFloat(state.paid),
-      id: randString(),
+      description: state.description,
     });
 
     setState(INIT_STATE);
@@ -53,7 +57,9 @@ export default function AddExpenseForm(props: Props) {
     onAfterSubmit?.();
   }
 
-  const disableSubmit = Object.values(state).some((value) => !value);
+  const disableSubmit = Object.values([state.name, state.paid]).some(
+    (value) => !value
+  );
 
   return (
     <motion.form layout onSubmit={handleSubmit}>
@@ -77,9 +83,19 @@ export default function AddExpenseForm(props: Props) {
             }))
           }
         />
+
+        <DescriptionInput
+          value={state.description}
+          onChange={(newValue) =>
+            setState((prev) => ({
+              ...prev,
+              description: newValue,
+            }))
+          }
+        />
       </div>
 
-      <Button className="w-full mt-4" type="submit" disabled={disableSubmit}>
+      <Button className="w-full mt-6" type="submit" disabled={disableSubmit}>
         Add Expense
       </Button>
     </motion.form>
