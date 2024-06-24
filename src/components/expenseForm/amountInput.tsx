@@ -19,8 +19,8 @@ export const AmountInput = (props: Props) => {
         autoComplete="off"
         required={true}
         onChange={(event) => onChange(event.target.value)}
-        type="text"
-        placeholder="$33.1"
+        type="number"
+        placeholder="33.1"
         value={value}
         className="text-right h-10 focus-visible:ring-0"
       />

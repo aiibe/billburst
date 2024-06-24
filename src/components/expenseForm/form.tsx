@@ -15,12 +15,18 @@ import { randString } from "@/app/utils";
 /* -------------------------------- Constants ------------------------------- */
 
 const expenseFormSchema = z.object({
-  name: z.string().min(2).max(8),
+  name: z
+    .string()
+    .min(2, { message: "Name is too short" })
+    .max(8, { message: "Name is too long" }),
   paid: z.preprocess(
     (s) => parseFloat(z.string().parse(s).replace(",", ".")),
     z.number().min(0).max(1000000)
   ),
-  description: z.string().max(100).optional(),
+  description: z
+    .string()
+    .max(120, { message: "Description is too long" })
+    .optional(),
 });
 
 const INIT_STATE = {
