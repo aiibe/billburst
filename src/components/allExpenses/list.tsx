@@ -24,8 +24,11 @@ export const ExpenseList = () => {
             </h4>
 
             {/* User total expenses */}
-            <h4 className="scroll-m-20 font-semibold tracking-tight text-right">
-              ${userTransactions.reduce((total, t) => (total += t.paid), 0)}
+            <h4 className="scroll-m-20 font-semibold tracking-tight text-right truncate">
+              $
+              {userTransactions
+                .reduce((total, t) => (total += t.paid), 0)
+                .toFixed(2)}
             </h4>
           </div>
 

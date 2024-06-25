@@ -17,12 +17,9 @@ import { randString } from "@/app/utils";
 const expenseFormSchema = z.object({
   name: z
     .string()
-    .min(2, { message: "Name is too short" })
-    .max(8, { message: "Name is too long" }),
-  paid: z.preprocess(
-    (s) => parseFloat(z.string().parse(s).replace(",", ".")),
-    z.number().min(0).max(1000000)
-  ),
+    .min(1, { message: "Name is required" })
+    .max(10, { message: "Name is too long" }),
+  paid: z.string().min(1, { message: "Amount is required" }).max(1000000),
   description: z
     .string()
     .max(120, { message: "Description is too long" })
@@ -31,7 +28,7 @@ const expenseFormSchema = z.object({
 
 const INIT_STATE = {
   name: "",
-  paid: 0,
+  paid: "",
   description: "",
 };
 
@@ -55,8 +52,19 @@ export default function AddExpenseForm(props: Props) {
 
   // Submit form
   const onSubmit = (values: AddExpenseFormState) => {
+    const { paid, ...rest } = values;
+
+    // Convert paid to number
+    const paidAmount = parseFloat(paid.replace(",", "."));
+
+    // Validate amount
+    if (isNaN(paidAmount)) {
+      return form.setError("paid", { message: "Invalid amount" });
+    }
+
     addTransaction({
-      ...values,
+      ...rest,
+      paid: paidAmount,
       id: randString(),
     });
 
@@ -84,12 +92,14 @@ export default function AddExpenseForm(props: Props) {
           <FormField
             name="paid"
             control={form.control}
-            render={({ field }) => (
-              <div className="flex flex-col gap-2">
-                <AmountInput value={field.value} onChange={field.onChange} />
-                <FormMessage />
-              </div>
-            )}
+            render={({ field }) => {
+              return (
+                <div className="flex flex-col gap-2">
+                  <AmountInput value={field.value} onChange={field.onChange} />
+                  <FormMessage />
+                </div>
+              );
+            }}
           />
 
           <FormField
