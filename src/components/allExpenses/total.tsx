@@ -6,7 +6,7 @@ export const ExpensesTotal = () => {
   const transactions = useTransactionStore((state) => state.transactions);
 
   // Total expenses amount
-  const totalSpent = transactions.reduce((t, r) => (t += r.paid), 0);
+  const totalSpent = transactions.reduce((t, r) => (t += r.paid), 0).toFixed(2);
 
   return (
     <div className="w-full flex justify-between items-baseline">
