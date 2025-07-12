@@ -1,5 +1,5 @@
 <div align="center">
-    <a href='https://billburst.vercel.app/'>
+    <a href='https://billburst.souk.dev/'>
         <img src="billburst_logo.png" height="70" />
     </a>
 </div>
@@ -8,14 +8,19 @@
 
 Minimal expenses splitter, inspired by SplitWise. No account needed to use. Your financial data never leaves your browser!
 
-[Try it now](https://billburst.vercel.app/)
+<div align="center">
+    <img src="billburst_screenshot.png" width="700" />
+</div>
+
+[Try it now](https://billburst.souk.dev/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
 
 - Split expenses with friends and family.
-- No account required; data stays in your browser.
+- No account required
+- Your data stays in your browser.
 - Simple and intuitive interface.
 
 ## Installation

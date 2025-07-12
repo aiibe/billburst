@@ -1,3 +1,9 @@
+# 0.3.1
+
+### FIXES
+
+- Fix form validation
+
 # 0.3.0
 
 ### FEATURES

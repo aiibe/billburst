@@ -20,7 +20,7 @@ export const ExpenseItem = (props: Props) => {
       <p className="flex flex-row items-center col-span-4">
         {/* Remove */}
         <button
-          className="w-4 h-4 mr-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+          className="w-4 h-4 mr-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
           onClick={() => removeTransaction(id)}
         >
           <Cross2Icon />
